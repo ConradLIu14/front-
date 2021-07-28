@@ -1,0 +1,24 @@
+{
+  "name": "npmbasis",
+  "version": "1.0.0",
+  "main": "1js类型.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-transform-react-jsx": "^7.13.12",
+    "@babel/preset-env": "^7.14.1",
+    "babel-loader": "^8.2.2",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.26.1",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0"
+  },
+  "description": ""
+}

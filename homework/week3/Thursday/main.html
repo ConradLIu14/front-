@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <link rel="stylesheet" href="./parse.css">
+</head>
+<body>
+    
+    <h2>Monaco Editor</h2>
+
+		<div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+
+		<script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+		<script>
+			require.config({ paths: { vs: './node_modules/monaco-editor/min/vs' } });
+
+			require.config({
+				'vs/nls': {
+					availableLanguages: {
+						'*': 'de'
+					}
+				}
+			});
+
+			require(['vs/editor/editor.main'], function () {
+				var editor = monaco.editor.create(document.getElementById('container'), {
+					value: ['let a = document.createElement("div")', 'a.style.height = "100px"', 'a.style.width = "100px"','a.style.backgroundColor = "red"','document.body.appendChild(a)'].join('\n'),
+					language: 'javascript'
+				});
+			});
+            
+		</script>
+        <script src="./dist/main.js"></script>
+        
+</body>
+</html>
