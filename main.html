@@ -1,39 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-    <link rel="stylesheet" href="./parse.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Main</title>
+	<link rel="stylesheet" href="./main.css">
 </head>
+
 <body>
-    
-    <h2>Monaco Editor</h2>
 
-		<div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+	<h2>Monaco Editor</h2>
 
-		<script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
-		<script>
-			require.config({ paths: { vs: './node_modules/monaco-editor/min/vs' } });
+	<div id="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
 
-			require.config({
-				'vs/nls': {
-					availableLanguages: {
-						'*': 'de'
-					}
+	<script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+	<script>
+		require.config({ paths: { vs: './node_modules/monaco-editor/min/vs' } });
+
+		require.config({
+			'vs/nls': {
+				availableLanguages: {
+					'*': 'de'
 				}
-			});
+			}
+		});
 
-			require(['vs/editor/editor.main'], function () {
-				var editor = monaco.editor.create(document.getElementById('container'), {
-					value: ['let a = document.createElement("div")', 'a.style.height = "100px"', 'a.style.width = "100px"','a.style.backgroundColor = "red"','document.body.appendChild(a)'].join('\n'),
-					language: 'javascript'
-				});
+		require(['vs/editor/editor.main'], function () {
+			var editor = monaco.editor.create(document.getElementById('container'), {
+				value: ['let a = document.createElement("div")', 'a.style.height = "100px"', 'a.style.width = "100px"', 'a.style.backgroundColor = "red"', 'document.body.appendChild(a)'].join('\n'),
+				language: 'javascript'
 			});
-            
-		</script>
-        <script src="./dist/main.js"></script>
-        
+		});
+
+	</script>
+
+	<script>
+		function fetch(){
+			let line_box = document.getElementsByClassName('view-lines')[0]
+			let res = []
+			let len_line_box = line_box.childNodes.length
+			for(let i = 0; i < len_line_box; i++){
+				let curr_line = line_box.childNodes[i].textContent
+				if(curr_line[curr_line.length - 1] != ";") curr_line += ";"
+				res.push(curr_line)
+				console.log(curr_line)
+			}
+			return res.join('\n')
+		}
+	</script>
+	<script>
+		let port = 13542
+		let target_name = "iframe_target"
+		let iframe = document.createElement("iframe")
+		iframe.classList.add("submit_target")
+		iframe.name = "iframe_target"
+		let display_state = 0
+		let size_toggle = () => {
+			console.log(this.dispaly_state)
+			if (dispaly_state === 0) {
+				iframe.style.height = "500px"
+
+				dispaly_state = 1
+			}
+			else {
+				iframe.style.height = ""
+				dispaly_state = 0
+			}
+		}
+
+		let submit_form = document.createElement("form")
+		submit_form.method = "Post"
+		submit_form.enctype = "text/plain"
+		submit_form.target = "iframe_target"
+		submit_form.action = "http://localhost:" + String(port)
+
+		let submit_textarea = document.createElement("textarea")
+		submit_textarea.name = "submit_text"
+		submit_form.appendChild(submit_textarea)
+
+		let submit_button = document.createElement("button")
+		submit_button.style.height = "20px"
+		submit_button.style.width = "80px"
+		submit_button.appendChild(document.createTextNode("submit"))
+
+		
+
+		let submit_onclick = () => {
+			let codes = fetch()
+			// console.log(codes)
+			submit_textarea.innerHTML = ''
+			submit_textarea.appendChild(document.createTextNode(codes))
+			submit_form.submit()
+		}
+
+		submit_button.onclick = submit_onclick
+
+		
+
+
+		let butt_box = document.createElement("div")
+		butt_box.classList.add("butt_box")
+		butt_box.appendChild(submit_button)
+
+
+		document.body.appendChild(iframe)
+		document.body.appendChild(submit_form)
+		document.body.appendChild(butt_box)
+
+
+	</script>
+
 </body>
+
 </html>

@@ -4,7 +4,7 @@
   "main": "1js类型.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "build.js"
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
